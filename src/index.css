@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #030712;
+    color: #fff;
+  }
+}
+
+@layer components {
+  .liquid-glass {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: relative;
+    overflow: hidden;
+  }
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(180deg,
+      rgba(0,212,255,0.25) 0%, rgba(255,255,255,0.05) 50%,
+      rgba(0,212,255,0.1) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .accent-glow {
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.15);
+  }
+
+  .section-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .tag {
+    display: inline-block;
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    color: #00D4FF;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 999px;
+    letter-spacing: 0.05em;
+  }
+}
+
+/* Animated gradient border on cards */
+.skill-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 28px;
+  transition: border-color 0.3s, background 0.3s, transform 0.3s;
+}
+.skill-card:hover {
+  border-color: rgba(0,212,255,0.4);
+  background: rgba(0,212,255,0.05);
+  transform: translateY(-4px);
+}
+
+/* Timeline */
+.timeline-line {
+  position: absolute;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, rgba(0,212,255,0.6), rgba(0,212,255,0.05));
+}
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #00D4FF;
+  border: 2px solid #030712;
+  box-shadow: 0 0 12px rgba(0,212,255,0.6);
+  flex-shrink: 0;
+}
+
+/* Scroll animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Offset anchor scroll position so fixed navbar doesn't cover section headings */
+section[id] {
+  scroll-margin-top: 90px;
+}
+
+/* Ensure sections are always scrollable even before reveal animations fire */
+section[id] {
+  scroll-margin-top: 90px;
+  min-height: 10px; /* prevents zero-height collapse */
+}
+
+/* While hidden, don't block pointer events or layout */
+.reveal {
+  pointer-events: none;
+}
+.reveal.visible {
+  pointer-events: auto;
+}
