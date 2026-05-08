@@ -49,7 +49,7 @@ export default function AboutSection() {
             { icon: '💼', label: 'Work Type', value: 'Remote · Full-time' },
             { icon: '🎓', label: 'Education', value: 'BS Info Decision Systems', sub: 'SDSU · 2000' },
             { icon: '⚖️', label: 'Industry', value: 'Legal Tech · Law Firm IT' },
-            { icon: '🤝', label: 'Open To', value: 'Remote · Hybrid Roles' },
+            { icon: '💻', label: 'Work Style', value: 'Remote · Hybrid Considered' },
           ].map((item) => (
             <div
               key={item.label}

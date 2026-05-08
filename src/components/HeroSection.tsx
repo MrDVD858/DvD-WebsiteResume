@@ -14,7 +14,7 @@ export default function HeroSection() {
 
       <div className="relative z-20 flex-1 flex flex-col justify-end px-6 md:px-12 lg:px-20 pb-16 lg:pb-24 max-w-6xl mx-auto w-full">
         <FadeIn delay={100} duration={800}>
-          <span className="tag mb-6 block w-fit">San Diego, CA · Remote · Open to Hybrid</span>
+          <span className="tag mb-6 block w-fit">San Diego, CA · Remote</span>
         </FadeIn>
 
         <AnimatedHeading
