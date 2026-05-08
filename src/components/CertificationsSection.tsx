@@ -37,7 +37,7 @@ const additionalCerts = [
   {
     name: 'AWS Certified Cloud Practitioner',
     issuer: 'Amazon Web Services',
-    date: 'Expired Aug 26, 2025',
+    date: 'Aug 2025',
     logo: 'https://images.credly.com/size/340x340/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png',
     credlyUrl: null,
     color: '#FF9900',
@@ -45,7 +45,7 @@ const additionalCerts = [
   {
     name: 'AWS Solutions Architect – Associate',
     issuer: 'Amazon Web Services',
-    date: 'Expired Aug 26, 2025',
+    date: 'Aug 2025',
     logo: 'https://images.credly.com/size/340x340/images/0e284c3f-5164-4b21-8660-0d84737941bc/image.png',
     credlyUrl: null,
     color: '#FF9900',
@@ -53,7 +53,7 @@ const additionalCerts = [
   {
     name: 'Certified in Cybersecurity (CC)',
     issuer: 'ISC2',
-    date: 'Expired Oct 31, 2025',
+    date: 'Oct 2025',
     logo: 'https://images.credly.com/size/340x340/images/2030e43f-8003-4d4b-9630-847add403c87/image.png',
     credlyUrl: null,
     color: '#00A850',
@@ -61,7 +61,7 @@ const additionalCerts = [
   {
     name: 'CCT Routing and Switching',
     issuer: 'Cisco',
-    date: 'Expired Oct 12, 2025',
+    date: 'Oct 2025',
     logo: 'https://images.credly.com/size/340x340/images/af8c6b4e-fc31-47c4-8dcb-eb7a2065dc5b/image.png',
     credlyUrl: null,
     color: '#1BA0D7',
@@ -121,7 +121,7 @@ function CertCard({ cert, status }: { cert: any, status: 'active' | 'expired' })
             background: 'rgba(255,160,0,0.07)', color: '#F59E0B',
             border: '1px solid rgba(255,160,0,0.2)',
           }}>
-          {isActive ? '✅ Active' : '⚠️ Expired'}
+          {isActive ? '✅ Active' : '⏳ Previously Held'}
         </span>
         {cert.credlyUrl
           ? <span className="text-xs text-gray-600 hover:text-cyan-400 transition-colors">Verify ↗</span>
@@ -155,7 +155,7 @@ export default function CertificationsSection() {
         {/* ── Additional / Expired ── */}
         <div className="reveal mb-2">
           <p className="text-xs text-gray-500 tracking-widest uppercase mb-1">Additional Credentials</p>
-          <p className="text-xs text-gray-700 mb-4">Knowledge verified · Renewal planned</p>
+          <p className="text-xs text-gray-700 mb-4">Knowledge verified · Renewal planned where applicable</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
           {additionalCerts.map((c) => (
