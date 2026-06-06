@@ -1,8 +1,5 @@
 import { useEffect, useRef } from 'react'
 
-// NetworkBackground — animated floating nodes with data packets traveling between them.
-// Replaces the video background in HeroSection.
-// To revert to the video, swap <NetworkBackground /> back to <video ...> in HeroSection.tsx
 export default function NetworkBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -10,159 +7,146 @@ export default function NetworkBackground() {
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')!
+    let animId = 0
+    let angle = 0
+    let W = 0, H = 0, CX = 0, CY = 0, R = 0
 
-    type Node = {
-      x: number; y: number
-      vx: number; vy: number
-      r: number; pulse: number; pulseSpeed: number
-    }
-    type Packet = {
-      sx: number; sy: number
-      dx: number; dy: number
-      t: number; speed: number
-    }
+    const cities = [
+      { lat: 47.6,  lng: -122.3, name: 'Seattle' },
+      { lat: 37.7,  lng: -122.4, name: 'San Francisco' },
+      { lat: 34.0,  lng: -118.2, name: 'Los Angeles' },
+      { lat: 32.7,  lng: -117.1, name: 'San Diego' },
+      { lat: 40.7,  lng:  -74.0, name: 'New York' },
+    ]
 
-    const nodes: Node[] = []
-    const packets: Packet[] = []
-    let W = 0, H = 0, animId = 0
+    const arcPairs: [number, number][] = [
+      [0,1],[0,3],[1,2],[1,3],[2,3],[2,4],[3,4],[0,4],[1,4]
+    ]
+    const arcs = arcPairs.map(([f, t]) => ({
+      from: f, to: t,
+      progress: Math.random(),
+      speed: 0.002 + Math.random() * 0.003,
+      active: Math.random() > 0.3
+    }))
 
     function resize() {
       const rect = canvas!.getBoundingClientRect()
       W = canvas!.width = rect.width * devicePixelRatio
       H = canvas!.height = rect.height * devicePixelRatio
-      ctx.scale(devicePixelRatio, devicePixelRatio)
-      W /= devicePixelRatio
-      H /= devicePixelRatio
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0)
+      W /= devicePixelRatio; H /= devicePixelRatio
+      CX = W / 2; CY = H / 2
+      R = Math.min(W, H) * 0.38
     }
 
-    function initNodes() {
-      nodes.length = 0
-      const count = Math.max(Math.floor((W * H) / 8000), 35)
-      for (let i = 0; i < count; i++) {
-        nodes.push({
-          x: Math.random() * W,
-          y: Math.random() * H,
-          vx: (Math.random() - 0.5) * 0.35,
-          vy: (Math.random() - 0.5) * 0.35,
-          r: Math.random() * 2 + 1.5,
-          pulse: Math.random() * Math.PI * 2,
-          pulseSpeed: 0.018 + Math.random() * 0.022,
-        })
+    function project(lat: number, lng: number, rotDeg: number) {
+      const phi = (90 - lat) * Math.PI / 180
+      const theta = (lng + rotDeg) * Math.PI / 180
+      const x = R * Math.sin(phi) * Math.cos(theta)
+      const y = R * Math.cos(phi)
+      const z = R * Math.sin(phi) * Math.sin(theta)
+      return { x: CX + x, y: CY - y, z, visible: z > -R * 0.1 }
+    }
+
+    function drawGlobe(rotDeg: number) {
+      for (let lat = -80; lat <= 80; lat += 20) {
+        ctx.beginPath(); let first = true
+        for (let lng = -180; lng <= 180; lng += 3) {
+          const p = project(lat, lng, rotDeg)
+          if (p.z > 0) { first ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y); first = false }
+          else { first = true }
+        }
+        ctx.strokeStyle = 'rgba(0,212,255,0.08)'; ctx.lineWidth = 0.5; ctx.stroke()
+      }
+      for (let lng = -180; lng < 180; lng += 20) {
+        ctx.beginPath(); let first = true
+        for (let lat = -90; lat <= 90; lat += 3) {
+          const p = project(lat, lng, rotDeg)
+          if (p.z > 0) { first ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y); first = false }
+          else { first = true }
+        }
+        ctx.strokeStyle = 'rgba(0,212,255,0.08)'; ctx.lineWidth = 0.5; ctx.stroke()
       }
     }
 
-    function spawnPacket() {
-      if (nodes.length < 2) return
-      const a = Math.floor(Math.random() * nodes.length)
-      let b = Math.floor(Math.random() * nodes.length)
-      while (b === a) b = Math.floor(Math.random() * nodes.length)
-      const src = nodes[a], dst = nodes[b]
-      const dist = Math.hypot(dst.x - src.x, dst.y - src.y)
-      if (dist > 280 || dist < 60) return
-      packets.push({
-        sx: src.x, sy: src.y,
-        dx: dst.x, dy: dst.y,
-        t: 0, speed: 0.005 + Math.random() * 0.008,
-      })
+    function drawArc(
+      p1: {x:number;y:number;z:number;visible:boolean},
+      p2: {x:number;y:number;z:number;visible:boolean},
+      progress: number
+    ) {
+      if (!p1.visible || !p2.visible) return
+      const alpha = Math.min((p1.z+R)/(R*1.2), (p2.z+R)/(R*1.2), 0.9)
+      if (alpha <= 0) return
+      const mx = (p1.x+p2.x)/2
+      const my = (p1.y+p2.y)/2 - Math.hypot(p2.x-p1.x, p2.y-p1.y)*0.38
+
+      ctx.beginPath()
+      ctx.moveTo(p1.x, p1.y)
+      ctx.quadraticCurveTo(mx, my, p2.x, p2.y)
+      ctx.strokeStyle = `rgba(0,212,255,${alpha*0.15})`
+      ctx.lineWidth = 0.8; ctx.stroke()
+
+      const t = progress, t2 = Math.max(0, t-0.1)
+      const px  = (1-t)*(1-t)*p1.x  + 2*(1-t)*t*mx  + t*t*p2.x
+      const py  = (1-t)*(1-t)*p1.y  + 2*(1-t)*t*my  + t*t*p2.y
+      const px2 = (1-t2)*(1-t2)*p1.x + 2*(1-t2)*t2*mx + t2*t2*p2.x
+      const py2 = (1-t2)*(1-t2)*p1.y + 2*(1-t2)*t2*my + t2*t2*p2.y
+
+      const grad = ctx.createLinearGradient(px2,py2,px,py)
+      grad.addColorStop(0,'rgba(0,212,255,0)')
+      grad.addColorStop(1,`rgba(0,212,255,${alpha*0.9})`)
+      ctx.beginPath(); ctx.moveTo(px2,py2); ctx.lineTo(px,py)
+      ctx.strokeStyle = grad; ctx.lineWidth = 1.8; ctx.stroke()
+
+      ctx.beginPath(); ctx.arc(px,py,2.5,0,Math.PI*2)
+      ctx.fillStyle = `rgba(255,255,255,${alpha})`; ctx.fill()
+    }
+
+    function drawCity(p: {x:number;y:number;z:number;visible:boolean}, name: string) {
+      if (!p.visible) return
+      const alpha = Math.min(1, (p.z+R)/(R*1.2))
+      ctx.beginPath(); ctx.arc(p.x,p.y,9,0,Math.PI*2)
+      ctx.fillStyle = `rgba(0,212,255,${alpha*0.07})`; ctx.fill()
+      ctx.beginPath(); ctx.arc(p.x,p.y,3.5,0,Math.PI*2)
+      ctx.fillStyle = `rgba(0,212,255,${alpha})`; ctx.fill()
+      ctx.beginPath(); ctx.arc(p.x,p.y,1.5,0,Math.PI*2)
+      ctx.fillStyle = `rgba(255,255,255,${alpha})`; ctx.fill()
+      ctx.font = `500 10px Inter`
+      ctx.fillStyle = `rgba(255,255,255,${alpha*0.65})`
+      ctx.fillText(name, p.x+8, p.y-4)
     }
 
     function draw() {
-      ctx.clearRect(0, 0, W, H)
+      ctx.clearRect(0,0,W,H)
+      ctx.fillStyle = '#030712'; ctx.fillRect(0,0,W,H)
 
-      // Draw edges between nearby nodes
-      const maxDist = 190
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const dx = nodes[j].x - nodes[i].x
-          const dy = nodes[j].y - nodes[i].y
-          const d = Math.hypot(dx, dy)
-          if (d < maxDist) {
-            const alpha = (1 - d / maxDist) * 0.2
-            ctx.beginPath()
-            ctx.moveTo(nodes[i].x, nodes[i].y)
-            ctx.lineTo(nodes[j].x, nodes[j].y)
-            ctx.strokeStyle = `rgba(0,212,255,${alpha})`
-            ctx.lineWidth = 0.5
-            ctx.stroke()
-          }
-        }
-      }
+      const grd = ctx.createRadialGradient(CX,CY,0,CX,CY,R*1.3)
+      grd.addColorStop(0,'rgba(0,212,255,0.04)')
+      grd.addColorStop(1,'rgba(0,212,255,0)')
+      ctx.fillStyle = grd
+      ctx.beginPath(); ctx.arc(CX,CY,R*1.3,0,Math.PI*2); ctx.fill()
 
-      // Draw nodes
-      for (const n of nodes) {
-        n.pulse += n.pulseSpeed
-        const glow = 0.5 + Math.sin(n.pulse) * 0.5
+      angle += 0.003
+      const rotDeg = angle * 180 / Math.PI
+      drawGlobe(rotDeg)
 
-        // Outer glow ring
-        ctx.beginPath()
-        ctx.arc(n.x, n.y, n.r * 3, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(0,212,255,${glow * 0.07})`
-        ctx.fill()
+      const pts = cities.map(city => ({ ...project(city.lat, city.lng, rotDeg), name: city.name }))
 
-        // Core dot
-        ctx.beginPath()
-        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(0,212,255,${0.45 + glow * 0.55})`
-        ctx.fill()
+      arcs.forEach(arc => {
+        if (!arc.active) { if (Math.random()<0.004) arc.active=true; return }
+        arc.progress += arc.speed
+        if (arc.progress > 1) { arc.progress=0; arc.active=Math.random()>0.15 }
+        drawArc(pts[arc.from], pts[arc.to], arc.progress)
+      })
 
-        // Move
-        n.x += n.vx
-        n.y += n.vy
-        if (n.x < 0 || n.x > W) n.vx *= -1
-        if (n.y < 0 || n.y > H) n.vy *= -1
-      }
-
-      // Draw packets (data traveling along edges)
-      for (let i = packets.length - 1; i >= 0; i--) {
-        const p = packets[i]
-        p.t += p.speed
-        if (p.t >= 1) { packets.splice(i, 1); continue }
-
-        const x = p.sx + (p.dx - p.sx) * p.t
-        const y = p.sy + (p.dy - p.sy) * p.t
-        const trailT = Math.max(0, p.t - 0.14)
-        const tx = p.sx + (p.dx - p.sx) * trailT
-        const ty = p.sy + (p.dy - p.sy) * trailT
-
-        // Trailing gradient line
-        const grad = ctx.createLinearGradient(tx, ty, x, y)
-        grad.addColorStop(0, 'rgba(0,212,255,0)')
-        grad.addColorStop(1, 'rgba(0,212,255,0.85)')
-        ctx.beginPath()
-        ctx.moveTo(tx, ty)
-        ctx.lineTo(x, y)
-        ctx.strokeStyle = grad
-        ctx.lineWidth = 1.5
-        ctx.stroke()
-
-        // Packet head dot
-        ctx.beginPath()
-        ctx.arc(x, y, 2.5, 0, Math.PI * 2)
-        ctx.fillStyle = '#00D4FF'
-        ctx.fill()
-      }
-
-      // Randomly spawn new packets
-      if (Math.random() < 0.045) spawnPacket()
-
+      pts.forEach((p,i) => drawCity(p, cities[i].name))
       animId = requestAnimationFrame(draw)
     }
 
-    resize()
-    initNodes()
-    draw()
-
-    const onResize = () => {
-      cancelAnimationFrame(animId)
-      resize()
-      initNodes()
-      draw()
-    }
+    resize(); draw()
+    const onResize = () => { cancelAnimationFrame(animId); resize(); draw() }
     window.addEventListener('resize', onResize)
-    return () => {
-      cancelAnimationFrame(animId)
-      window.removeEventListener('resize', onResize)
-    }
+    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', onResize) }
   }, [])
 
   return (
