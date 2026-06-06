@@ -1,3 +1,6 @@
+// Knobbe brand blue: #1B5EA6
+const KNOBBE_BLUE = '#1B5EA6'
+
 const experience = [
   {
     role: 'Sr. Network Administrator & IT Support Manager',
@@ -125,9 +128,10 @@ export default function ExperienceSection() {
                   <h3 className="text-white font-semibold text-lg" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
                     {job.role}
                   </h3>
+                  {/* Knobbe Martens company link uses their brand blue */}
                   <a href={job.companyUrl} target="_blank" rel="noreferrer"
                     className="text-sm font-medium mt-0.5 hover:underline inline-block"
-                    style={{ color: '#00D4FF' }}>
+                    style={{ color: KNOBBE_BLUE }}>
                     {job.company} ↗
                   </a>
                 </div>

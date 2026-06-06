@@ -1,3 +1,6 @@
+// Knobbe brand blue: #1B5EA6 (matched from their site)
+const KNOBBE_BLUE = '#1B5EA6'
+
 export default function AboutSection() {
   return (
     <section id="about" className="py-28 px-6 md:px-12 lg:px-20 max-w-6xl mx-auto">
@@ -54,14 +57,14 @@ export default function AboutSection() {
             <div
               key={item.label}
               className={'skill-card flex flex-col' + (item.url ? ' cursor-pointer' : '')}
-              style={item.url ? { borderColor: 'rgba(0,212,255,0.2)' } : {}}
+              style={item.url ? { borderColor: `${KNOBBE_BLUE}55` } : {}}
               onClick={() => item.url && window.open(item.url, '_blank')}
             >
-              {/* Knobbe card gets a styled logo treatment instead of emoji */}
+              {/* Knobbe card — uses their actual brand blue */}
               {item.icon === null ? (
                 <div className="mb-3 flex items-center gap-2">
                   <div className="px-2 py-0.5 rounded text-xs font-bold tracking-tight"
-                    style={{ background: '#1B3A6B', color: '#fff', fontFamily: 'Space Grotesk, sans-serif' }}>
+                    style={{ background: KNOBBE_BLUE, color: '#fff', fontFamily: 'Space Grotesk, sans-serif' }}>
                     KM
                   </div>
                   <span className="text-xs text-gray-600">knobbe.com ↗</span>
@@ -71,7 +74,7 @@ export default function AboutSection() {
               )}
               <p className="text-xs text-gray-500 mb-1 tracking-wide uppercase">{item.label}</p>
               {item.url
-                ? <p className="font-semibold text-sm" style={{ color: '#00D4FF' }}>{item.value}</p>
+                ? <p className="font-semibold text-sm" style={{ color: KNOBBE_BLUE }}>{item.value}</p>
                 : <p className="text-white font-medium text-sm">{item.value}</p>
               }
               {item.sub && <p className="text-xs text-gray-600 mt-0.5">{item.sub}</p>}
