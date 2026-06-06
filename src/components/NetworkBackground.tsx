@@ -56,7 +56,7 @@ export default function NetworkBackground() {
           if (p.z > 0) { first ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y); first = false }
           else { first = true }
         }
-        ctx.strokeStyle = 'rgba(0,212,255,0.08)'; ctx.lineWidth = 0.5; ctx.stroke()
+        ctx.strokeStyle = 'rgba(0,212,255,0.22)'; ctx.lineWidth = 0.5; ctx.stroke()
       }
       for (let lng = -180; lng < 180; lng += 20) {
         ctx.beginPath(); let first = true
@@ -65,7 +65,7 @@ export default function NetworkBackground() {
           if (p.z > 0) { first ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y); first = false }
           else { first = true }
         }
-        ctx.strokeStyle = 'rgba(0,212,255,0.08)'; ctx.lineWidth = 0.5; ctx.stroke()
+        ctx.strokeStyle = 'rgba(0,212,255,0.22)'; ctx.lineWidth = 0.5; ctx.stroke()
       }
     }
 
@@ -121,7 +121,7 @@ export default function NetworkBackground() {
       ctx.fillStyle = '#030712'; ctx.fillRect(0,0,W,H)
 
       const grd = ctx.createRadialGradient(CX,CY,0,CX,CY,R*1.3)
-      grd.addColorStop(0,'rgba(0,212,255,0.04)')
+      grd.addColorStop(0,'rgba(0,212,255,0.08)')
       grd.addColorStop(1,'rgba(0,212,255,0)')
       ctx.fillStyle = grd
       ctx.beginPath(); ctx.arc(CX,CY,R*1.3,0,Math.PI*2); ctx.fill()
@@ -129,6 +129,13 @@ export default function NetworkBackground() {
       angle += 0.003
       const rotDeg = angle * 180 / Math.PI
       drawGlobe(rotDeg)
+
+      // Globe edge outline circle
+      ctx.beginPath()
+      ctx.arc(CX, CY, R, 0, Math.PI * 2)
+      ctx.strokeStyle = 'rgba(0,212,255,0.25)'
+      ctx.lineWidth = 0.8
+      ctx.stroke()
 
       const pts = cities.map(city => ({ ...project(city.lat, city.lng, rotDeg), name: city.name }))
 
