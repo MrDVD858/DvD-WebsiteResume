@@ -8,10 +8,10 @@ export default function Footer() {
         <span className="font-bold text-lg" style={{ fontFamily: 'Space Grotesk, sans-serif', color: '#00D4FF' }}>
           DVD
         </span>
-        <p className="text-gray-600 text-sm text-center">
+        <p className="text-gray-400 text-sm text-center">
           © {year} De Van Do · San Diego, CA
-          <span className="mx-2 text-gray-800">·</span>
-          <span className="text-gray-700">Updated {month} {year}</span>
+          <span className="mx-2 text-gray-600">·</span>
+          <span className="text-gray-400">Updated {month} {year}</span>
         </p>
         <a href="https://linkedin.com/in/de-van-do-68a89825b/" target="_blank" rel="noreferrer"
           className="text-sm text-gray-500 hover:text-white transition-colors">

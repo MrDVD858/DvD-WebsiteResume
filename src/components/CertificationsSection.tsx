@@ -85,11 +85,16 @@ const inProgressCerts = [
 
 function CertCard({ cert, status }: { cert: any, status: 'active' | 'expired' }) {
   const isActive = status === 'active'
+  // Render as a real <a> when there's a Credly link — keyboard-focusable,
+  // screen-reader friendly, and right-clickable. Falls back to <div> otherwise.
+  const Wrapper = (cert.credlyUrl ? 'a' : 'div') as any
+  const linkProps = cert.credlyUrl
+    ? { href: cert.credlyUrl, target: '_blank', rel: 'noreferrer', title: 'Verify on Credly ↗' }
+    : {}
   return (
-    <div
-      className={'skill-card reveal flex flex-col' + (cert.credlyUrl ? ' cursor-pointer' : '')}
-      onClick={() => cert.credlyUrl && window.open(cert.credlyUrl, '_blank')}
-      title={cert.credlyUrl ? 'Verify on Credly ↗' : ''}
+    <Wrapper
+      className={'skill-card reveal flex flex-col no-underline' + (cert.credlyUrl ? ' cursor-pointer' : '')}
+      {...linkProps}
     >
       <div className="flex items-start gap-3 mb-4">
         <div className="w-14 h-14 flex-shrink-0 flex items-center justify-center rounded-xl overflow-hidden"
@@ -124,11 +129,11 @@ function CertCard({ cert, status }: { cert: any, status: 'active' | 'expired' })
           {isActive ? '✅ Active' : '⏳ Previously Held'}
         </span>
         {cert.credlyUrl
-          ? <span className="text-xs text-gray-600 hover:text-cyan-400 transition-colors">Verify ↗</span>
-          : <span className="text-xs text-gray-700">{cert.date}</span>
+          ? <span className="text-xs text-gray-400 hover:text-cyan-400 transition-colors">Verify ↗</span>
+          : <span className="text-xs text-gray-400">{cert.date}</span>
         }
       </div>
-    </div>
+    </Wrapper>
   )
 }
 
@@ -155,7 +160,7 @@ export default function CertificationsSection() {
         {/* ── Additional / Expired ── */}
         <div className="reveal mb-2">
           <p className="text-xs text-gray-500 tracking-widest uppercase mb-1">Additional Credentials</p>
-          <p className="text-xs text-gray-700 mb-4">Knowledge verified · Renewal planned where applicable</p>
+          <p className="text-xs text-gray-400 mb-4">Knowledge verified · Renewal planned where applicable</p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
           {additionalCerts.map((c) => (

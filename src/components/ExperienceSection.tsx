@@ -137,7 +137,7 @@ export default function ExperienceSection() {
                 </div>
                 <div className="text-right flex-shrink-0">
                   <p className="text-gray-400 text-sm">{job.period}</p>
-                  <p className="text-gray-600 text-xs mt-0.5">{job.type}</p>
+                  <p className="text-gray-400 text-xs mt-0.5">{job.type}</p>
                 </div>
               </div>
 

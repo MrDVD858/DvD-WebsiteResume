@@ -2,14 +2,10 @@ import AnimatedHeading from './AnimatedHeading'
 import FadeIn from './FadeIn'
 import NetworkBackground from './NetworkBackground'
 
-const VIDEO_URL = 'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260403_050628_c4e32401-fab4-4a27-b7a8-6e9291cd5959.mp4'
-
 export default function HeroSection() {
   return (
     <section className="relative w-full h-screen flex flex-col overflow-hidden">
       <NetworkBackground />
-      {/* <video className="absolute inset-0 w-full h-full object-cover z-0"
-        src={VIDEO_URL} autoPlay loop muted playsInline /> */}
       <div className="absolute inset-0 z-10" style={{ background: 'linear-gradient(to bottom, rgba(3,7,18,0.2) 0%, rgba(3,7,18,0.4) 60%, rgba(3,7,18,0.97) 100%)' }} />
 
       <div className="relative z-20 flex-1 flex flex-col justify-end px-6 md:px-12 lg:px-20 pb-16 lg:pb-24 max-w-6xl mx-auto w-full">

@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import Navbar from './components/Navbar'
 import HeroSection from './components/HeroSection'
 import AboutSection from './components/AboutSection'
@@ -11,12 +10,6 @@ import { useScrollReveal } from './hooks/useScrollReveal'
 
 export default function App() {
   useScrollReveal()
-
-  useEffect(() => {
-    // Debug: log all section ids found in the DOM after render
-    const sections = document.querySelectorAll('section[id]')
-    console.log('Sections found:', Array.from(sections).map(s => s.id))
-  }, [])
 
   return (
     <main style={{ background: '#030712' }}>

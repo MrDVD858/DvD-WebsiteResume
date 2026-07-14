@@ -24,7 +24,7 @@ export default function ContactSection() {
         </div>
 
         <div className="border-t border-white/10 pt-12">
-          <p className="text-xs text-gray-600 tracking-widest uppercase mb-6">Top Skills</p>
+          <p className="text-xs text-gray-400 tracking-widest uppercase mb-6">Top Skills</p>
           <div className="flex flex-wrap gap-3 justify-center">
             {[
               'Network Administration', 'iManage DMS', 'Palo Alto Firewall',
