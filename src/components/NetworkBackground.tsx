@@ -1,7 +1,17 @@
 import { useEffect, useRef } from 'react'
 
-// NetworkBackground — Rotating globe with real country outlines from GeoJSON
-// Country data loaded from /public/continents.json at runtime
+// NetworkBackground — Rotating globe with real country outlines from GeoJSON.
+// The country dataset is loaded on demand (desktop only) via a dynamic import(),
+// which Vite splits into its own hashed chunk. That means: it's build-managed so
+// it can't 404 like a hand-written /continents.json path, there's no separate
+// public fetch to fail, AND phones (which hide the globe) never download it.
+//
+// Two deliberate behaviors:
+//  1. It only runs on tablet/desktop (>= 768px). On phones the globe sat directly
+//     behind the hero text and collided with it, so we skip it entirely there —
+//     this also avoids running an animation loop on mobile (battery friendly).
+//  2. City markers are drawn as subtle dots only — no text labels — so the globe
+//     reads as background texture instead of competing place-names over the copy.
 
 export default function NetworkBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -13,14 +23,20 @@ export default function NetworkBackground() {
     let animId = 0
     let angle = Math.PI  // start with Americas facing viewer
     let W = 0, H = 0, CX = 0, CY = 0, R = 0
+    // Country outline rings — populated on demand (desktop only) by applyMode().
     let countryRings: number[][][] = []
+    let cancelled = false  // guards the async import against a mid-load unmount
+
+    // Only animate from md up. matchMedia lets us react if the user rotates the
+    // phone or resizes across the breakpoint without reloading.
+    const desktop = window.matchMedia('(min-width: 768px)')
 
     const cities = [
-      { lat: 47.6,  lng: -122.3, name: 'Seattle' },
-      { lat: 37.7,  lng: -122.4, name: 'San Francisco' },
-      { lat: 34.0,  lng: -118.2, name: 'Los Angeles' },
-      { lat: 32.7,  lng: -117.1, name: 'San Diego' },
-      { lat: 40.7,  lng:  -74.0, name: 'New York' },
+      { lat: 47.6,  lng: -122.3 },  // Seattle
+      { lat: 37.7,  lng: -122.4 },  // San Francisco
+      { lat: 34.0,  lng: -118.2 },  // Los Angeles
+      { lat: 32.7,  lng: -117.1 },  // San Diego
+      { lat: 40.7,  lng:  -74.0 },  // New York
     ]
 
     const arcPairs: [number, number][] = [
@@ -32,12 +48,6 @@ export default function NetworkBackground() {
       speed: 0.002 + Math.random() * 0.003,
       active: Math.random() > 0.3
     }))
-
-    // Load country outlines from public folder
-    fetch('/continents.json')
-      .then(r => r.json())
-      .then((data: number[][][]) => { countryRings = data })
-      .catch(() => { countryRings = [] })
 
     function resize() {
       const rect = canvas!.getBoundingClientRect()
@@ -142,7 +152,9 @@ export default function NetworkBackground() {
       ctx.fillStyle = `rgba(255,255,255,${alpha})`; ctx.fill()
     }
 
-    function drawCity(p: {x:number;y:number;z:number;visible:boolean}, name: string) {
+    // City marker: glow + dot only. Text labels were removed because they
+    // overlapped the hero headline and description.
+    function drawCity(p: {x:number;y:number;z:number;visible:boolean}) {
       if (!p.visible) return
       const alpha = Math.min(1, (p.z+R)/(R*1.2))
       ctx.beginPath(); ctx.arc(p.x,p.y,9,0,Math.PI*2)
@@ -151,9 +163,6 @@ export default function NetworkBackground() {
       ctx.fillStyle = `rgba(0,212,255,${alpha})`; ctx.fill()
       ctx.beginPath(); ctx.arc(p.x,p.y,1.5,0,Math.PI*2)
       ctx.fillStyle = `rgba(255,255,255,${alpha})`; ctx.fill()
-      ctx.font = `500 10px Inter`
-      ctx.fillStyle = `rgba(255,255,255,${alpha*0.65})`
-      ctx.fillText(name, p.x+8, p.y-4)
     }
 
     function draw() {
@@ -179,7 +188,7 @@ export default function NetworkBackground() {
       ctx.lineWidth = 0.8
       ctx.stroke()
 
-      const pts = cities.map(city => ({ ...project(city.lat, city.lng, rotDeg), name: city.name }))
+      const pts = cities.map(city => project(city.lat, city.lng, rotDeg))
 
       arcs.forEach(arc => {
         if (!arc.active) { if (Math.random()<0.004) arc.active=true; return }
@@ -188,20 +197,47 @@ export default function NetworkBackground() {
         drawArc(pts[arc.from], pts[arc.to], arc.progress)
       })
 
-      pts.forEach((p,i) => drawCity(p, cities[i].name))
+      pts.forEach((p) => drawCity(p))
       animId = requestAnimationFrame(draw)
     }
 
-    resize(); draw()
-    const onResize = () => { cancelAnimationFrame(animId); resize(); draw() }
+    // Start or stop the animation based on the current viewport width.
+    function start() { resize(); draw() }
+    function stop() { cancelAnimationFrame(animId); ctx.clearRect(0, 0, W, H) }
+
+    async function applyMode() {
+      stop()
+      if (!desktop.matches) return  // phones: globe stays hidden, nothing loads
+      // Load the ~250 KB country-outline dataset only the first time we go desktop.
+      // import() returns a Promise and produces a separate Vite chunk (see header).
+      if (countryRings.length === 0) {
+        const mod = await import('../data/continents.json')
+        if (cancelled) return
+        countryRings = mod.default as number[][][]
+      }
+      start()
+    }
+
+    applyMode()
+
+    // Only respond to resizes while the globe is actually running.
+    const onResize = () => { if (!desktop.matches) return; cancelAnimationFrame(animId); resize(); draw() }
     window.addEventListener('resize', onResize)
-    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', onResize) }
+    desktop.addEventListener('change', applyMode)
+
+    return () => {
+      cancelled = true
+      cancelAnimationFrame(animId)
+      window.removeEventListener('resize', onResize)
+      desktop.removeEventListener('change', applyMode)
+    }
   }, [])
 
+  // hidden md:block — the canvas isn't even in the layout on phones.
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full z-0"
+      className="hidden md:block absolute inset-0 w-full h-full z-0"
       style={{ background: '#030712' }}
     />
   )
