@@ -1,3 +1,5 @@
+import { Check, Clock, RefreshCw } from 'lucide-react'
+
 const activeCerts = [
   {
     name: 'CompTIA Security+ ce',
@@ -118,7 +120,7 @@ function CertCard({ cert, status }: { cert: any, status: 'active' | 'expired' })
         </div>
       </div>
       <div className="mt-auto flex items-center justify-between gap-2 flex-wrap">
-        <span className="text-xs px-2.5 py-1 rounded-full"
+        <span className="text-xs px-2.5 py-1 rounded-full inline-flex items-center gap-1"
           style={isActive ? {
             background: 'rgba(0,212,255,0.08)', color: '#00D4FF',
             border: '1px solid rgba(0,212,255,0.25)',
@@ -126,7 +128,9 @@ function CertCard({ cert, status }: { cert: any, status: 'active' | 'expired' })
             background: 'rgba(255,160,0,0.07)', color: '#F59E0B',
             border: '1px solid rgba(255,160,0,0.2)',
           }}>
-          {isActive ? '✅ Active' : '⏳ Previously Held'}
+          {isActive
+            ? <><Check size={13} strokeWidth={2.5} /> Active</>
+            : <><Clock size={13} strokeWidth={2} /> Previously Held</>}
         </span>
         {cert.credlyUrl
           ? <span className="text-xs text-gray-400 hover:text-cyan-400 transition-colors">Verify ↗</span>
@@ -194,9 +198,9 @@ export default function CertificationsSection() {
             <div className="flex-1">
               <p className="text-gray-400 text-sm">Currently pursuing AZ-104 &amp; CCNA — deepening cloud and networking credentials to complement 25 years of enterprise infrastructure expertise.</p>
             </div>
-            <span className="text-xs px-4 py-2 rounded-full flex-shrink-0"
+            <span className="text-xs px-4 py-2 rounded-full flex-shrink-0 inline-flex items-center gap-1.5"
               style={{ background: 'rgba(255,200,0,0.08)', color: '#FFC800', border: '1px solid rgba(255,200,0,0.25)' }}>
-              🔄 In Progress
+              <RefreshCw size={13} strokeWidth={2} /> In Progress
             </span>
           </div>
         </div>

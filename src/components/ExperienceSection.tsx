@@ -1,3 +1,5 @@
+import { FolderLock, Scale } from 'lucide-react'
+
 // Knobbe brand blue: #1B5EA6
 const KNOBBE_BLUE = '#1B5EA6'
 
@@ -74,7 +76,7 @@ export default function ExperienceSection() {
       {/* iManage callout banner */}
       <div className="reveal mb-12 skill-card" style={{ borderColor: 'rgba(0,212,255,0.3)', background: 'rgba(0,212,255,0.04)' }}>
         <div className="flex flex-wrap items-center gap-6">
-          <div className="text-3xl">📁</div>
+          <FolderLock size={30} strokeWidth={1.5} style={{ color: '#00D4FF' }} className="flex-shrink-0" />
           <div className="flex-1">
             <p className="text-white font-semibold text-lg mb-1" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
               Sole iManage DMS Administrator — 700 Users
@@ -94,7 +96,7 @@ export default function ExperienceSection() {
       {/* War room callout banner */}
       <div className="reveal mb-12 skill-card" style={{ borderColor: 'rgba(255,180,0,0.3)', background: 'rgba(255,180,0,0.03)' }}>
         <div className="flex flex-wrap items-center gap-6">
-          <div className="text-3xl">⚖️</div>
+          <Scale size={30} strokeWidth={1.5} style={{ color: '#F59E0B' }} className="flex-shrink-0" />
           <div className="flex-1">
             <p className="text-white font-semibold text-lg mb-1" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
               Trial War Room Specialist — 30+ Deployments Over 15 Years

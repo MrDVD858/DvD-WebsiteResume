@@ -4,9 +4,26 @@ import NetworkBackground from './NetworkBackground'
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full h-screen flex flex-col overflow-hidden">
+    <section className="relative w-full h-screen flex flex-col overflow-hidden" style={{ background: '#0C1526' }}>
+      {/* Ambient glow — soft cyan radial for depth behind the hero. Shows on every
+          viewport (behind the globe on desktop, on its own on mobile). Static CSS,
+          no canvas — can't collide with the text and costs nothing to render. */}
+      <div className="absolute inset-0 z-0" style={{ background: 'radial-gradient(ellipse 120% 80% at 50% 42%, rgba(0,212,255,0.13) 0%, rgba(0,212,255,0.03) 48%, transparent 72%)' }} />
+
+      {/* Faint grid — mobile only. Fills the visual space the desktop globe occupies,
+          masked to fade out before it reaches the copy. */}
+      <div className="absolute inset-0 z-0 md:hidden" style={{
+        backgroundImage: 'linear-gradient(rgba(0,212,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.05) 1px, transparent 1px)',
+        backgroundSize: '34px 34px',
+        WebkitMaskImage: 'radial-gradient(ellipse 90% 55% at 50% 30%, #000 0%, transparent 68%)',
+        maskImage: 'radial-gradient(ellipse 90% 55% at 50% 30%, #000 0%, transparent 68%)',
+      }} />
+
+      {/* Rotating globe — desktop only, transparent canvas so navy + glow show through */}
       <NetworkBackground />
-      <div className="absolute inset-0 z-10" style={{ background: 'linear-gradient(to bottom, rgba(3,7,18,0.2) 0%, rgba(3,7,18,0.4) 60%, rgba(3,7,18,0.97) 100%)' }} />
+
+      {/* Bottom scrim (navy) keeps the copy readable over whatever is behind it */}
+      <div className="absolute inset-0 z-10" style={{ background: 'linear-gradient(to bottom, rgba(12,21,38,0) 0%, rgba(12,21,38,0.35) 55%, rgba(12,21,38,0.95) 100%)' }} />
 
       <div className="relative z-20 flex-1 flex flex-col justify-end px-6 md:px-12 lg:px-20 pb-16 lg:pb-24 max-w-6xl mx-auto w-full">
         <FadeIn delay={100} duration={800}>

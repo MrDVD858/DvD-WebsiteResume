@@ -166,14 +166,9 @@ export default function NetworkBackground() {
     }
 
     function draw() {
+      // Transparent canvas — the section's navy background and CSS ambient glow
+      // show through, and the globe lines composite on top of them.
       ctx.clearRect(0,0,W,H)
-      ctx.fillStyle = '#030712'; ctx.fillRect(0,0,W,H)
-
-      const grd = ctx.createRadialGradient(CX,CY,0,CX,CY,R*1.3)
-      grd.addColorStop(0,'rgba(0,212,255,0.06)')
-      grd.addColorStop(1,'rgba(0,212,255,0)')
-      ctx.fillStyle = grd
-      ctx.beginPath(); ctx.arc(CX,CY,R*1.3,0,Math.PI*2); ctx.fill()
 
       angle += 0.003
       const rotDeg = angle * 180 / Math.PI
@@ -238,7 +233,7 @@ export default function NetworkBackground() {
     <canvas
       ref={canvasRef}
       className="hidden md:block absolute inset-0 w-full h-full z-0"
-      style={{ background: '#030712' }}
+      style={{ background: 'transparent' }}
     />
   )
 }

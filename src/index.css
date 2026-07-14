@@ -9,7 +9,7 @@
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: #030712;
+    background: #0C1526;
     color: #fff;
   }
 }
@@ -90,7 +90,7 @@
   height: 12px;
   border-radius: 50%;
   background: #00D4FF;
-  border: 2px solid #030712;
+  border: 2px solid #0C1526;
   box-shadow: 0 0 12px rgba(0,212,255,0.6);
   flex-shrink: 0;
 }

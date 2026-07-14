@@ -12,7 +12,7 @@ export default function App() {
   useScrollReveal()
 
   return (
-    <main style={{ background: '#030712' }}>
+    <main style={{ background: '#0C1526' }}>
       <Navbar />
       <HeroSection />
       <AboutSection />

@@ -1,3 +1,5 @@
+import { MapPin, Briefcase, GraduationCap, Scale, Laptop } from 'lucide-react'
+
 // Knobbe brand blue: #1B5EA6 (matched from their site)
 const KNOBBE_BLUE = '#1B5EA6'
 
@@ -48,12 +50,13 @@ export default function AboutSection() {
         <div className="reveal grid grid-cols-2 gap-4" style={{ transitionDelay: '150ms' }}>
           {[
             { icon: null, label: 'Current Employer', value: 'Knobbe Martens', sub: 'IP + Technology Law', url: 'https://www.knobbe.com/' },
-            { icon: '📍', label: 'Location', value: 'San Diego, CA' },
-            { icon: '💼', label: 'Work Type', value: 'Remote · Full-time' },
-            { icon: '🎓', label: 'Education', value: 'BS Info Decision Systems', sub: 'SDSU · 2000' },
-            { icon: '⚖️', label: 'Industry', value: 'Legal Tech · Law Firm IT' },
-            { icon: '💻', label: 'Work Style', value: 'Remote · Hybrid Considered' },
+            { icon: MapPin, label: 'Location', value: 'San Diego, CA' },
+            { icon: Briefcase, label: 'Work Type', value: 'Remote · Full-time' },
+            { icon: GraduationCap, label: 'Education', value: 'BS Info Decision Systems', sub: 'SDSU · 2000' },
+            { icon: Scale, label: 'Industry', value: 'Legal Tech · Law Firm IT' },
+            { icon: Laptop, label: 'Work Style', value: 'Remote · Hybrid Considered' },
           ].map((item) => {
+            const Icon = item.icon
             // Shared card contents. We build them once, then wrap in either an
             // <a> (when the card links somewhere) or a plain <div> (when it doesn't).
             // Using a real <a> makes the link keyboard-focusable, screen-reader
@@ -61,7 +64,7 @@ export default function AboutSection() {
             const inner = (
               <>
                 {/* Knobbe card — uses their actual brand blue */}
-                {item.icon === null ? (
+                {Icon === null ? (
                   <div className="mb-3 flex items-center gap-2">
                     <div className="px-2 py-0.5 rounded text-xs font-bold tracking-tight"
                       style={{ background: KNOBBE_BLUE, color: '#fff', fontFamily: 'Space Grotesk, sans-serif' }}>
@@ -70,7 +73,7 @@ export default function AboutSection() {
                     <span className="text-xs text-gray-400">knobbe.com ↗</span>
                   </div>
                 ) : (
-                  <span className="text-2xl mb-3 block">{item.icon}</span>
+                  <Icon size={22} strokeWidth={1.5} className="mb-3" style={{ color: '#00D4FF' }} />
                 )}
                 <p className="text-xs text-gray-500 mb-1 tracking-wide uppercase">{item.label}</p>
                 {item.url
