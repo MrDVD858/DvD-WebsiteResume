@@ -1,4 +1,4 @@
-import { Network, Cloud, FolderLock, Scale, ShieldCheck, Users } from 'lucide-react'
+import { Network, Cloud, FolderLock, Scale, ShieldCheck, Users, Server, Terminal, Search } from 'lucide-react'
 
 const skills = [
   {
@@ -9,9 +9,9 @@ const skills = [
   },
   {
     icon: Cloud,
-    title: 'Microsoft Stack',
-    desc: 'Active Directory, Azure AD (Entra ID), Microsoft 365, Windows Server 2008–2022, Intune, and PowerShell automation.',
-    tags: ['Azure AD', 'M365', 'Windows Server', 'Intune'],
+    title: 'Cloud & Identity',
+    desc: 'Microsoft Entra ID, Azure, Microsoft 365, Exchange Online, Intune, Conditional Access and MFA, Active Directory, Group Policy, and Windows Server.',
+    tags: ['Entra ID', 'M365', 'Exchange Online', 'Intune', 'Windows Server'],
   },
   {
     icon: FolderLock,
@@ -22,20 +22,38 @@ const skills = [
   {
     icon: Scale,
     title: 'Litigation Support',
-    desc: 'Trial war room deployment across 6+ U.S. cities — AV/network config, on-site and remote support for active trial teams.',
-    tags: ['War Room', 'Trial Support', 'AV/Network', 'Multi-city'],
+    desc: '30+ trial war room deployments over 15 years — full litigation command centers built in 2–3 days under zero-fail conditions across Seattle, SF, LA, San Diego, and NY.',
+    tags: ['War Room', 'Trial Support', 'Multi-city', 'Zero-fail Delivery'],
   },
   {
     icon: ShieldCheck,
     title: 'Security & Compliance',
-    desc: 'Mimecast, Darktrace Antigena Email, Identity & Access Management, endpoint security via Intune, CompTIA Security+ certified.',
-    tags: ['Mimecast', 'Darktrace', 'IAM', 'CompTIA Sec+'],
+    desc: 'CyberArk Endpoint Privilege Management, Darktrace, Mimecast, SysxSense, identity & access governance, permission auditing. CompTIA Security+ certified.',
+    tags: ['CyberArk EPM', 'Darktrace', 'Mimecast', 'SysxSense', 'IAM'],
   },
   {
     icon: Users,
     title: 'Team & IT Leadership',
-    desc: 'Managing and mentoring a 5-person Systems Support team — restructured ticket ownership, eliminated chronic ticket-passing, bridging helpdesk to firm strategy.',
-    tags: ['Team Management', 'FreshService', 'ITSM', 'Workflow Optimization'],
+    desc: 'Lead and develop a 5-person Systems Support team — ticket ownership redesign, SLA and escalation management, vendor relationships, and technology planning with firm leadership.',
+    tags: ['Team Leadership', 'ITSM', 'FreshService', 'Vendor Management', 'Escalation'],
+  },
+  {
+    icon: Server,
+    title: 'Virtualization & Storage',
+    desc: 'Hyper-V and Storage Spaces Direct cluster infrastructure, failover clustering, Cluster Shared Volumes, enterprise file services, capacity planning, and backup/restore verification.',
+    tags: ['Hyper-V', 'Storage Spaces Direct', 'Failover Clustering', 'Backup/Restore'],
+  },
+  {
+    icon: Search,
+    title: 'eDiscovery Infrastructure',
+    desc: 'Maintain Relativity and RelativityOne infrastructure — SQL Server, ARM archival, and storage capacity — sustaining integration continuity for litigation and eDiscovery teams.',
+    tags: ['Relativity', 'RelativityOne', 'ARM', 'SQL Server'],
+  },
+  {
+    icon: Terminal,
+    title: 'Automation & Scripting',
+    desc: 'PowerShell, Microsoft Graph API, and REST-driven bulk administration — workspace and folder migrations, account provisioning, and permission audits at firm scale.',
+    tags: ['PowerShell', 'Microsoft Graph', 'REST API', 'Bulk Administration'],
   },
 ]
 

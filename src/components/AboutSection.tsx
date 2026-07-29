@@ -31,19 +31,21 @@ export default function AboutSection() {
 
           <span className="tag mb-4 block w-fit">About Me</span>
           <h2 className="section-heading text-white mb-6">
-            25 years. One firm.<br />Every layer of IT.
+            25 years.<br />Every layer of IT.
           </h2>
           <p className="text-gray-400 leading-relaxed mb-4">
-            My entire 25-year IT career has been built at Knobbe Martens — a 700-user national
-            law firm with 7 offices across the U.S. I started as a Systems Support Technician
-            in 2001 and earned my way up to a dual senior leadership role, advancing ahead of
-            more tenured peers at every step.
+            I own enterprise infrastructure and service delivery for a 700-user national IP law
+            firm across 7 U.S. offices — network, identity, cloud, virtualization, and security —
+            while leading the 5-person team that supports it. I started as a Systems Support
+            Technician in 2001 and moved through four roles to get here, taking on more scope at
+            each step rather than more of the same work.
           </p>
           <p className="text-gray-400 leading-relaxed">
-            That depth of tenure isn't just loyalty — it's institutional knowledge that can't
-            be hired off a job board. I know the infrastructure, the people, the legal workflows,
-            and the high-stakes moments that matter most: trial week, system migrations, and
-            keeping 700 users running without interruption.
+            Working the full stack at one organization means I've owned systems end to end rather
+            than inheriting them mid-life — I built the document management platform through four
+            migrations, stood up the cloud identity and endpoint security programs, and absorbed a
+            departing administrator's entire portfolio without a service interruption. I'm now
+            looking to bring that ownership to a broader IT leadership role.
           </p>
         </div>
 

@@ -25,25 +25,9 @@ const activeCerts = [
     credlyUrl: 'https://www.credly.com/org/okta/badge/okta-certified-professional',
     color: '#00D4FF',
   },
-  {
-    name: 'Google AI Essentials V1',
-    issuer: 'Coursera / Google',
-    date: 'Issued Sep 1, 2024',
-    logo: 'https://images.credly.com/size/340x340/images/ea3eec65-ddad-4242-9c59-1defac0fa2d9/image.png',
-    credlyUrl: null,
-    color: '#4285F4',
-  },
 ]
 
 const additionalCerts = [
-  {
-    name: 'AWS Certified Cloud Practitioner',
-    issuer: 'Amazon Web Services',
-    date: 'Aug 2025',
-    logo: 'https://images.credly.com/size/340x340/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png',
-    credlyUrl: null,
-    color: '#FF9900',
-  },
   {
     name: 'AWS Solutions Architect – Associate',
     issuer: 'Amazon Web Services',
@@ -59,14 +43,6 @@ const additionalCerts = [
     logo: 'https://images.credly.com/size/340x340/images/2030e43f-8003-4d4b-9630-847add403c87/image.png',
     credlyUrl: null,
     color: '#00A850',
-  },
-  {
-    name: 'CCT Routing and Switching',
-    issuer: 'Cisco',
-    date: 'Oct 2025',
-    logo: 'https://images.credly.com/size/340x340/images/af8c6b4e-fc31-47c4-8dcb-eb7a2065dc5b/image.png',
-    credlyUrl: null,
-    color: '#1BA0D7',
   },
 ]
 

@@ -1,4 +1,4 @@
-import { FolderLock, Scale } from 'lucide-react'
+import { FolderLock, Layers } from 'lucide-react'
 
 // Knobbe brand blue: #1B5EA6
 const KNOBBE_BLUE = '#1B5EA6'
@@ -10,56 +10,63 @@ const experience = [
     companyUrl: 'https://www.knobbe.com/',
     period: 'Jan 2026 – Present',
     type: 'Dual Role · Remote · Full-time',
-    desc: 'Promoted to dual senior leadership role overseeing both enterprise network infrastructure and a 5-person Systems Support team. Serves as sole iManage DMS administrator for all 700 firm users, and as senior IT liaison bridging helpdesk operations, infrastructure, and firm-level technology strategy.',
+    desc: 'Promoted to a dual role holding accountability for enterprise network, identity, cloud, and security infrastructure alongside leadership of the firm\u2019s 5-person Systems Support organization. Sole enterprise administrator for iManage Cloud v2 across all 700 users, and final escalation authority for the support team.',
     bullets: [
-      'Manage and mentor 5-person Systems Support team — restructured ticket ownership workflows, eliminating chronic ticket-passing',
-      'Sole iManage Cloud v2 DMS administrator: document restores, workspace creation/maintenance, Security Policy Management (SPM) for 700 users',
-      'Maintain enterprise network, Active Directory, Azure AD, and M365 across HQ and all 7 remote offices',
-      'Senior IT liaison between helpdesk operations, infrastructure, and firm leadership',
+      'Lead and develop a 5-person Systems Support team — redesigned the ticket ownership model to eliminate chronic cross-team handoffs',
+      'Assumed the full infrastructure and application portfolio of a departing systems administrator with no service interruption and no added headcount',
+      'Own enterprise network, Active Directory, Entra ID, and Microsoft 365 operations supporting 700 users across 7 offices',
+      'Sole enterprise administrator for iManage Cloud v2 — Security Policy Manager governance, workspace lifecycle, and document recovery',
+      'Manage vendor relationships, renewals, and technical evaluations across the firm\u2019s platform and security stack',
     ],
-    tags: ['Team Leadership', 'iManage Cloud v2', 'SPM', 'Active Directory', 'Azure AD', 'M365', 'Cisco Networking', 'PowerShell'],
+    tags: ['Team Leadership', 'ITSM', 'iManage Cloud v2', 'SPM', 'Entra ID', 'M365', 'Vendor Management'],
   },
   {
     role: 'Sr. Network Administrator',
     company: 'Knobbe Martens',
     companyUrl: 'https://www.knobbe.com/',
-    period: '~2009 – Dec 2025',
+    period: '2009 – Dec 2025',
     type: 'Remote · Full-time',
-    desc: 'Primary iManage DMS administrator and senior network engineer for a 700-user national law firm. Led major infrastructure initiatives including a multi-phase iManage cloud migration, firm-wide network refresh, and 30+ trial war room deployments across the U.S. over 15 years',
+    desc: 'Senior infrastructure owner for a 700-user national law firm. Led the firm\u2019s multi-year document management modernization, a firm-wide network refresh, the move to Microsoft cloud identity, and the endpoint security program — while delivering trial infrastructure for active litigation nationwide.',
     bullets: [
-      'Led multi-phase iManage migration: file shares → on-premise → iManage Cloud → Cloud v2',
-      'Coordinated firm-wide network refresh — core switches, routers, and Palo Alto NGFW firewalls',
-      'Deployed trial war room technology across 30+ trial venues across the U.S. — hotel conference rooms transformed into full litigation command centers over 2–3 day setups, with ongoing on-site and remote support throughout active trials in cities including Seattle, SF, LA, San Diego, and NY',
-      'Coordinated IT for multiple national office relocations',
+      'Led a four-phase document management modernization — network file shares → on-premise iManage → iManage Cloud → Cloud v2 — for all 700 users',
+      'Directed a firm-wide network refresh spanning core switching, routing, and Palo Alto next-generation firewalls',
+      'Standardized firewall policy and remote access through Panorama and GlobalProtect, scaling secure connectivity through the shift to remote and hybrid work',
+      'Deployed and administered Entra ID, Microsoft 365, Exchange Online, and Intune under centralized policy',
+      'Implemented the firm\u2019s endpoint and email security stack — CyberArk Endpoint Privilege Management, Darktrace, Mimecast, and SysxSense',
+      'Maintained Hyper-V and Storage Spaces Direct cluster infrastructure, including capacity planning and backup/restore verification',
+      'Maintained Relativity and RelativityOne infrastructure — SQL Server, ARM archival, and storage — sustaining integration continuity for eDiscovery teams',
+      'Automated bulk administration with PowerShell, Microsoft Graph, and REST APIs — workspace migrations, provisioning, and permission audits',
+      'Delivered 30+ trial war room deployments over 15 years across Seattle, SF, LA, San Diego, and NY',
     ],
-    tags: ['iManage', 'SPM', 'Palo Alto Firewall', 'Cisco', 'Windows Server', 'Active Directory', 'VPN', 'Litigation Support'],
+    tags: ['iManage', 'Palo Alto NGFW', 'Panorama', 'GlobalProtect', 'Entra ID', 'Intune', 'Hyper-V', 'S2D', 'RelativityOne', 'PowerShell', 'CyberArk'],
   },
   {
     role: 'Jr. Network Administrator',
     company: 'Knobbe Martens',
     companyUrl: 'https://www.knobbe.com/',
-    period: '~2005 – ~2009',
+    period: '2005 – 2009',
     type: 'Promoted from Systems Support',
-    desc: 'Primary on-site IT resource for the San Diego office with remote support responsibilities across SF, LA, Seattle, NY, and Washington D.C. Began supporting litigation teams with trial preparation and on-site technical logistics.',
+    desc: 'Primary on-site IT resource for the San Diego office with remote support responsibility across five additional national offices. Established the on-site litigation deployment practice later scaled firm-wide.',
     bullets: [
-      'Owned all network infrastructure and desktop support for San Diego office',
+      'Owned network infrastructure and desktop support for the San Diego office',
       'Provided remote IT coverage for 5 additional national offices',
-      'Began litigation and trial support responsibilities',
+      'Assumed first litigation and trial support responsibilities',
     ],
-    tags: ['Network Administration', 'End-user Support', 'Remote Office Support', 'Windows Server', 'Litigation Support'],
+    tags: ['Network Administration', 'Remote Office Support', 'Windows Server', 'Litigation Support'],
   },
   {
     role: 'Systems Support Technician',
     company: 'Knobbe Martens',
     companyUrl: 'https://www.knobbe.com/',
-    period: 'Jul 2001 – ~2005',
+    period: 'Jul 2001 – 2005',
     type: 'Full-time · Entry Level',
-    desc: 'Started IT career providing desktop, hardware, and software support in a fully on-premise Windows environment. Promoted to Jr. Network Administrator within 4 years, advancing ahead of a more tenured peer.',
+    desc: 'Began IT career delivering Tier 1 and Tier 2 support across the firm\u2019s Windows desktop, application, and network environment, including iManage client support and off-site trial and hearing setups.',
     bullets: [
-      'Desktop, hardware, and software support across Windows XP/2000 environment',
-      'Promoted to Jr. Network Admin within 4 years, advancing ahead of a more tenured peer',
+      'Tier 1 and Tier 2 support across desktop, hardware, software, and network',
+      'Supported iManage DeskSite/FileSite clients and off-site trial and hearing setups',
+      'Promoted to Jr. Network Administrator within 4 years',
     ],
-    tags: ['Desktop Support', 'Windows XP/2000', 'Hardware Troubleshooting', 'Legal IT'],
+    tags: ['Desktop Support', 'iManage DeskSite/FileSite', 'Hardware Troubleshooting', 'Legal IT'],
   },
 ]
 
@@ -69,7 +76,7 @@ export default function ExperienceSection() {
       <div className="reveal mb-16">
         <span className="tag mb-4 block w-fit">Experience</span>
         <h2 className="section-heading text-white">
-          25 years at one firm.<br />Every role earned.
+          Four roles.<br />Increasing scope at every step.
         </h2>
       </div>
 
@@ -93,23 +100,23 @@ export default function ExperienceSection() {
         </div>
       </div>
 
-      {/* War room callout banner */}
+      {/* Scope-expansion callout — the strongest leadership signal on the page */}
       <div className="reveal mb-12 skill-card" style={{ borderColor: 'rgba(255,180,0,0.3)', background: 'rgba(255,180,0,0.03)' }}>
         <div className="flex flex-wrap items-center gap-6">
-          <Scale size={30} strokeWidth={1.5} style={{ color: '#F59E0B' }} className="flex-shrink-0" />
+          <Layers size={30} strokeWidth={1.5} style={{ color: '#F59E0B' }} className="flex-shrink-0" />
           <div className="flex-1">
             <p className="text-white font-semibold text-lg mb-1" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-              Trial War Room Specialist — 30+ Deployments Over 15 Years
+              Absorbed a Full Systems Administrator Portfolio — No Service Interruption
             </p>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Transformed hotel conference rooms into fully operational litigation command centers — network, AV, secure access —
-              in 2–3 day deployments ahead of active trials. On-site and remote support throughout proceedings in Seattle, SF, LA, San Diego, NY, and beyond.
-              High-stakes, zero-margin-for-error work.
+              When a systems administrator departed, the firm consolidated their infrastructure and application
+              responsibilities into my role rather than backfilling. Virtualization and storage, eDiscovery infrastructure,
+              and the endpoint security stack — absorbed without added headcount and without a service interruption.
             </p>
           </div>
           <div className="flex-shrink-0">
             <span className="text-xs px-3 py-1 rounded-full" style={{ background: 'rgba(255,180,0,0.1)', color: '#FFB400', border: '1px solid rgba(255,180,0,0.3)' }}>
-              Litigation Support
+              Expanded Scope
             </span>
           </div>
         </div>

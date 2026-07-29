@@ -1,6 +1,7 @@
 import AnimatedHeading from './AnimatedHeading'
 import FadeIn from './FadeIn'
 import NetworkBackground from './NetworkBackground'
+import CountUp from './CountUp'
 
 export default function HeroSection() {
   return (
@@ -45,15 +46,24 @@ export default function HeroSection() {
         />
 
         <FadeIn delay={900} duration={900}>
-          <p className="text-xl md:text-2xl font-light mb-2" style={{ color: '#00D4FF' }}>
+          <p className="text-xl md:text-2xl font-light mb-1" style={{ color: '#00D4FF' }}>
             Sr. Network Administrator & IT Support Manager
+          </p>
+        </FadeIn>
+
+        {/* Positioning line — mirrors the resume header so the two documents echo
+            each other for anyone who checks both. */}
+        <FadeIn delay={1000} duration={900}>
+          <p className="text-sm md:text-base text-gray-400 mb-2 tracking-wide">
+            Infrastructure & IT Operations Leadership · Enterprise Systems · Legal Technology
           </p>
         </FadeIn>
 
         <FadeIn delay={1100} duration={900}>
           <p className="text-gray-400 text-base md:text-lg mb-8 max-w-2xl leading-relaxed">
-            25 years building and running enterprise IT at a 700-user national law firm —
-            network infrastructure, iManage DMS, litigation war rooms, and team leadership across 7 offices.
+            25 years of progressive ownership across enterprise infrastructure and service delivery at a
+            700-user national IP law firm — network, identity, and cloud across 7 offices, plus leadership
+            of the firm's support organization.
           </p>
         </FadeIn>
 
@@ -79,13 +89,17 @@ export default function HeroSection() {
         <FadeIn delay={1700} duration={900}>
           <div className="flex flex-wrap gap-8 mt-12 pt-8 border-t border-white/10">
             {[
-              { value: '25+', label: 'Years Experience' },
               { value: '700', label: 'User Enterprise' },
               { value: '7', label: 'National Offices' },
-              { value: '30+', label: 'War Room Deployments' },
+              { value: '5', label: 'Person Team Led' },
+              { value: '25+', label: 'Years Experience' },
             ].map((s) => (
               <div key={s.label}>
-                <p className="text-2xl font-bold" style={{ fontFamily: 'Space Grotesk, sans-serif', color: '#00D4FF' }}>{s.value}</p>
+                <CountUp
+                  value={s.value}
+                  className="text-2xl font-bold"
+                  style={{ fontFamily: 'Space Grotesk, sans-serif', color: '#00D4FF' }}
+                />
                 <p className="text-xs text-gray-500 mt-1 tracking-wide">{s.label}</p>
               </div>
             ))}
